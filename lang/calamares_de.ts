@@ -1059,7 +1059,7 @@ Dies wird das Installationsprogramm beenden und alle Änderungen gehen verloren.
       <location filename="../src/modules/summary/Config.cpp" line="35"/>
       <source>Summary</source>
       <comment>@label</comment>
-      <translation>Zusammenfassung</translation>
+      <translation>Übersicht</translation>
     </message>
     <message>
       <location filename="../src/modules/summary/Config.cpp" line="39"/>
@@ -1805,7 +1805,7 @@ Dies wird das Installationsprogramm beenden und alle Änderungen gehen verloren.
       <location filename="../src/modules/finishedq/FinishedQmlViewStep.cpp" line="35"/>
       <source>Finish</source>
       <comment>@label</comment>
-      <translation>Abschließen</translation>
+      <translation>Beenden</translation>
     </message>
   </context>
   <context>
@@ -1814,7 +1814,7 @@ Dies wird das Installationsprogramm beenden und alle Änderungen gehen verloren.
       <location filename="../src/modules/finished/FinishedViewStep.cpp" line="46"/>
       <source>Finish</source>
       <comment>@label</comment>
-      <translation>Abschließen</translation>
+      <translation>Beenden</translation>
     </message>
   </context>
   <context>
@@ -4590,7 +4590,7 @@ Ausgabe:
     <message>
       <location filename="../src/calamares/calamares-sidebar.qml" line="115"/>
       <source>Debug</source>
-      <translation>Beheben von Fehlern</translation>
+      <translation>Debug/translation>
     </message>
     <message>
       <location filename="../src/calamares/CalamaresWindow.cpp" line="157"/>

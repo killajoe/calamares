@@ -4534,7 +4534,7 @@ Información de salida:
       <location filename="../src/modules/welcomeq/WelcomeQmlViewStep.cpp" line="40"/>
       <source>Welcome</source>
       <comment>@title</comment>
-      <translation>Te damos la bienvenida</translation>
+      <translation>Bienvenido</translation>
     </message>
   </context>
   <context>
@@ -4543,7 +4543,7 @@ Información de salida:
       <location filename="../src/modules/welcome/WelcomeViewStep.cpp" line="46"/>
       <source>Welcome</source>
       <comment>@title</comment>
-      <translation>Te damos la bienvenida</translation>
+      <translation>Bienvenido</translation>
     </message>
   </context>
   <context>

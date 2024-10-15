@@ -36,6 +36,7 @@ EndeavourOS Calamares Theme
 	background-color:#2a2e32;
 }
 
+/*
 #sidebarMenuApp {
 	background-image: url(/etc/calamares/branding/endeavouros/side-bar.png);
 	background-color: #31363b;
@@ -43,6 +44,7 @@ EndeavourOS Calamares Theme
 	background-position: center;
 	background-repeat: no-repeat;
 }
+*/
 
 QWidget {
 	font: 12px;

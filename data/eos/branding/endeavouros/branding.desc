@@ -1,19 +1,17 @@
 componentName: endeavouros
 
-welcomeStyleCalamares: false
+welcomeStyleCalamares:   false
 
-welcomeExpandingLogo: true
+# Should the welcome image (productWelcome, below) be scaled
+# up beyond its natural size?
+welcomeExpandingLogo:   true
 
-# windowExpanding: normal
-windowExpanding: noexpand
-
-windowSize: 1200px,715px
-
+windowExpanding:    normal
+windowSize: 1300px,620px
 windowPlacement: center
 
-sidebar: widget
-
-navigation: widget
+sidebar: qml,top
+navigation: qml,bottom
 
 strings:
     productName:         EndeavourOS
@@ -35,8 +33,8 @@ slideshowAPI: 2
 
 style:
    SidebarBackground:        "#31363b"
-   SidebarText:              "#ffffff"
-   SidebarTextCurrent:       "#7d7dfb"
+   SidebarText:              "#3c4a58"
+   SidebarTextCurrent:       "#7f7fff"
    SidebarBackgroundCurrent: "#31363b"
 
 slideshow:               "show.qml"

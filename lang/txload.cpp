@@ -49,9 +49,7 @@ load_file( const char* filename, QDomDocument& doc )
     QByteArray ba( file.read( 1024 * 1024 ) );
     qDebug() << "Read" << ba.length() << "bytes from" << filename;
 
-QDomDocument::ParseResult result = doc.setContent(ba);
-if (!result.isValid())
-    
+    if ( !doc.setContent( ba, &err, &err_line, &err_column ) )
     {
         qDebug() << "Could not read" << filename << ':' << err_line << ':' << err_column << ' ' << err;
         file.close();

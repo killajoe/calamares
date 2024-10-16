@@ -51,7 +51,7 @@ load_file( const char* filename, QDomDocument& doc )
 
 QDomDocument::ParseResult result = doc.setContent(ba);
 if (!result.isEmpty()) {
-    QString errorMessage = result.errorString();
+    QString errorMessage = result.errorLine();
     // Handle parsing error based on the error message
 }
     {

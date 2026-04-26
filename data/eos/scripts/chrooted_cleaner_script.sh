@@ -100,6 +100,7 @@ _clean_offline_packages(){
         mkinitcpio-archiso
         mkinitcpio-busybox
         mkinitcpio-nfs-utils
+        nbd
         pv
         syslinux
 

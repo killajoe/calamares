@@ -12,6 +12,7 @@
 # 07-2025 adding logic to install nvidia-lts if needed - @killajoe/joekamprad
 # 11-2025 adding logic to install broadcom-wl if needed and extra check to decide if broadcom-wl or broadcom-wl-dkms is needed - @killajoe/joekamprad
 # 01-2026 changing to only use nvidia-open - @killajoe/joekamprad
+# 04-2026 adding fix for issue with skel files not applied + some some fixes - @killajoe/joekamprad
 
 _c_c_s_msg() {            # use this to provide all user messages (info, warning, error, ...)
     local type="$1"
@@ -117,7 +118,6 @@ _clean_offline_packages(){
         ## Calamares EndeavourOS
         $(pacman -Qq | grep calamares)        # finds calamares related packages
         ckbcomp
-	
     )
 
     pacman -Rsn --noconfirm "${packages_to_remove[@]}"
@@ -132,7 +132,7 @@ _install_extra_drivers_to_target() {
     if [ -r /tmp/broadcom-wl.txt ] && grep -q "^yes$" /tmp/broadcom-wl.txt; then
         _pkg_msg info "Installing broadcom-wl package"
 
-        if _is_offline_mode; then
+        if [ "$INSTALL_TYPE" != "online" ]; then
             # Install using the copied broadcom-wl package.
             pkg="$(/usr/bin/ls -1 $dir/broadcom-wl-*-x86_64.pkg.tar.zst 2>/dev/null | head -n1)"
             if [ -n "$pkg" ]; then
@@ -179,8 +179,9 @@ _clean_up(){
     # change log file permissions
     [ -r /var/log/Calamares.log ]         && chown root:root /var/log/Calamares.log
 
-    # run possible user-given commands
-    # _RunUserCommands     # this is in calamares directly now
+    # fix skel issue for Titan ISO
+    cp -rT /etc/skel/ /home/$NEW_USER/
+    chown -R "$NEW_USER":"$NEW_USER" "/home/$NEW_USER/"
 }
 
 _show_info_about_installed_system() {

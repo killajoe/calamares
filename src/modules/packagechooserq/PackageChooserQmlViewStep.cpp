@@ -1,12 +1,12 @@
 /* === This file is part of Calamares - <https://calamares.io> ===
  *
- *   SPDX-FileCopyrightText: 2019 Adriaan de Groot <groot@kde.org>
- *   SPDX-FileCopyrightText: 2021 Anke Boersma <demm@kaosx.us>
- *   SPDX-License-Identifier: GPL-3.0-or-later
+ * SPDX-FileCopyrightText: 2019 Adriaan de Groot <groot@kde.org>
+ * SPDX-FileCopyrightText: 2021 Anke Boersma <demm@kaosx.us>
+ * SPDX-License-Identifier: GPL-3.0-or-later
  *
- *   Calamares is Free Software: see the License-Identifier above.
+ * Calamares is Free Software: see the License-Identifier above.
  *
- */
+ * */
 
 #include "PackageChooserQmlViewStep.h"
 
@@ -16,6 +16,11 @@
 #include "utils/Logger.h"
 #include "utils/System.h"
 #include "utils/Variant.h"
+#include "utils/CalamaresUtils.h"
+
+#include <QCoreApplication>
+#include <QTranslator>
+#include <QLocale>
 
 CALAMARES_PLUGIN_FACTORY_DEFINITION( PackageChooserQmlViewStepFactory, registerPlugin< PackageChooserQmlViewStep >(); )
 
@@ -23,6 +28,28 @@ PackageChooserQmlViewStep::PackageChooserQmlViewStep( QObject* parent )
     : Calamares::QmlViewStep( parent )
     , m_config( new Config( this ) )
 {
+    static QTranslator* moduleTranslator = nullptr;
+
+    if ( !moduleTranslator )
+    {
+        moduleTranslator = new QTranslator( QCoreApplication::instance() );
+        QString localeName = QLocale::system().name();
+        QString translationsPath = CalamaresUtils::dataDirectory().absoluteFilePath( "lang" );
+
+        if ( moduleTranslator->load( QString( "packagechooserq_" + localeName ), translationsPath ) )
+        {
+            QCoreApplication::installTranslator( moduleTranslator );
+        }
+        else
+        {
+            QString shortLocale = localeName.left( 2 );
+            if ( moduleTranslator->load( QString( "packagechooserq_" + shortLocale ), translationsPath ) )
+            {
+                QCoreApplication::installTranslator( moduleTranslator );
+            }
+        }
+    }
+
     emit nextStatusChanged( true );
 }
 

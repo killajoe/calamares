@@ -51,11 +51,6 @@ PackageChooserQmlViewStep::PackageChooserQmlViewStep( QObject* parent )
         }
     }
 
-    if ( engine() )
-    {
-        engine()->retranslate();
-    }
-
     emit nextStatusChanged( true );
 }
 
@@ -116,4 +111,10 @@ PackageChooserQmlViewStep::setConfigurationMap( const QVariantMap& configuration
     m_config->setDefaultId( moduleInstanceKey() );
     m_config->setConfigurationMap( configurationMap );
     Calamares::QmlViewStep::setConfigurationMap( configurationMap );  // call parent implementation last
+
+    // The engine is fully instantiated after the parent implementation has processed the configuration map
+    if ( engine() )
+    {
+        engine()->retranslate();
+    }
 }

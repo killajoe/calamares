@@ -16,7 +16,6 @@
 #include "utils/Logger.h"
 #include "utils/System.h"
 #include "utils/Variant.h"
-#include "utils/Paths.h"
 
 #include <QCoreApplication>
 #include <QTranslator>
@@ -36,9 +35,14 @@ PackageChooserQmlViewStep::PackageChooserQmlViewStep( QObject* parent )
         moduleTranslator = new QTranslator( QCoreApplication::instance() );
         QString localeName = QLocale::system().name();
         
-        // Resolves to the standard data directory (e.g., /usr/share/calamares/)
-        QDir dataDir = Calamares::Paths::instance()->dataDir();
-        QString translationsPath = dataDir.absoluteFilePath( "lang" );
+        // Define standard system installation paths for Calamares translations
+        QString translationsPath = QStringLiteral( "/usr/share/calamares/lang" );
+        
+        // Fallback for local development/build testing environments
+        if ( !QDir( translationsPath ).exists() )
+        {
+            translationsPath = QDir( QCoreApplication::applicationDirPath() ).absoluteFilePath( "../share/calamares/lang" );
+        }
 
         if ( moduleTranslator->load( QString( "packagechooserq_" + localeName ), translationsPath ) )
         {

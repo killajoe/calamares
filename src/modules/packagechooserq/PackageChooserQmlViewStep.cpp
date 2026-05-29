@@ -21,6 +21,7 @@
 #include <QTranslator>
 #include <QLocale>
 #include <QDir>
+#include <QQmlEngine>
 
 CALAMARES_PLUGIN_FACTORY_DEFINITION( PackageChooserQmlViewStepFactory, registerPlugin< PackageChooserQmlViewStep >(); )
 
@@ -34,15 +35,7 @@ PackageChooserQmlViewStep::PackageChooserQmlViewStep( QObject* parent )
     {
         moduleTranslator = new QTranslator( QCoreApplication::instance() );
         QString localeName = QLocale::system().name();
-        
-        // Define standard system installation paths for Calamares translations
         QString translationsPath = QStringLiteral( "/usr/share/calamares/lang" );
-        
-        // Fallback for local development/build testing environments
-        if ( !QDir( translationsPath ).exists() )
-        {
-            translationsPath = QDir( QCoreApplication::applicationDirPath() ).absoluteFilePath( "../share/calamares/lang" );
-        }
 
         if ( moduleTranslator->load( QString( "packagechooserq_" + localeName ), translationsPath ) )
         {
@@ -56,6 +49,11 @@ PackageChooserQmlViewStep::PackageChooserQmlViewStep( QObject* parent )
                 QCoreApplication::installTranslator( moduleTranslator );
             }
         }
+    }
+
+    if ( engine() )
+    {
+        engine()->retranslate();
     }
 
     emit nextStatusChanged( true );

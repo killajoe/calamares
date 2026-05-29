@@ -390,7 +390,7 @@ runOsprober( DeviceModel* dm )
             }
 
             QString file, path = lineColumns.value( 0 ).simplified();
-            if ( !path.startsWith( "/dev/" ) )  // basic sanity check
+            if ( !path.startsWith( "/dev/" ) )  //basic sanity check
             {
                 continue;
             }
@@ -512,6 +512,7 @@ isEfiFilesystemMinimumSize( const Partition* candidate )
         return false;
     }
 }
+
 bool
 isEfiBootable( const Partition* candidate )
 {
@@ -562,24 +563,20 @@ efiFilesystemMinimumSize()
 {
     const QString key = efiFilesystemMinimumSizeGSKey();
 
-    qint64 uefisys_part_sizeB = 0;
+    qint64 uefisys_part_sizeB = efiFilesystemRecommendedSize();
 
     // The default can be overridden; the key used here comes
     // from the partition module Config.cpp
     auto* gs = Calamares::JobQueue::instance()->globalStorage();
     if ( gs->contains( key ) )
     {
-        // Ignore the minimum size when grub is the bootloader
-        if ( !gs->contains( "curBootloader" ) || gs->value( "curBootloader" ).toString().toLower() != "grub" )
-        {
-            qint64 v = gs->value( key ).toLongLong();
-            uefisys_part_sizeB = v > 0 ? v : 0;
-        }
+        qint64 v = gs->value( key ).toLongLong();
+        uefisys_part_sizeB = v > 0 ? v : 0;
     }
-
     // There is a lower limit of what can be configured
     return std::max( uefisys_part_sizeB, efiSpecificationHardMinimumSize );
 }
+
 QString
 canonicalFilesystemName( const QString& fsName, FileSystem::Type* fsType )
 {
@@ -619,7 +616,7 @@ canonicalFilesystemName( const QString& fsName, FileSystem::Type* fsType )
         *fsType = FileSystem::Unknown;
     }
 #ifdef DEBUG_FILESYSTEMS
-    // This bit is for distro's debugging their settings, and shows
+    // This bit is for distros who are debugging their settings, and shows
     // all the strings that KPMCore is matching against for FS type.
     {
         Logger::CDebug d;

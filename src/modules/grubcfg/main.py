@@ -45,7 +45,7 @@ def get_grub_config_path(root_mount_point):
         possible_dir = os.path.join(root_mount_point, "etc/default/grub.d")
         if os.path.exists(possible_dir) and os.path.isdir(possible_dir):
             default_dir = possible_dir
-            default_config_file = "00calamares"
+            default_config_file = "00calamares.cfg"
 
     if not os.path.exists(default_dir):
         try:
@@ -152,7 +152,6 @@ def modify_grub_default(partitions, root_mount_point, distributor):
     uses_systemd_hook = libcalamares.utils.target_env_call(
         ["sh", "-c", "grep -q \"^HOOKS.*systemd\" /etc/mkinitcpio.conf"]
         ) == 0
-
     # Shell exit value 0 means success
     have_plymouth = plymouth_bin == 0
     use_systemd_naming = dracut_bin == 0 or uses_systemd_hook
@@ -305,24 +304,6 @@ def run():
 
     :return:
     """
-
-    if not libcalamares.job.configuration:
-        return "No configuration found", "Aborting due to missing configuration"
-
-    try:
-        gs_name = libcalamares.job.configuration["gsName"]
-    except KeyError:
-        return "Missing global storage value", "gsname not found in configuration file"
-
-    if libcalamares.globalstorage.contains(gs_name):
-        bootloader_name = libcalamares.globalstorage.value(gs_name)
-    else:
-        return f"Key missing", f"Failed to find {gs_name} in global storage"
-
-    if bootloader_name != "grub":
-        libcalamares.utils.debug("Bootloader is not grub, skipping grub configuration")
-        return None
-
     fw_type = libcalamares.globalstorage.value("firmwareType")
     partitions = libcalamares.globalstorage.value("partitions")
     root_mount_point = libcalamares.globalstorage.value("rootMountPoint")
